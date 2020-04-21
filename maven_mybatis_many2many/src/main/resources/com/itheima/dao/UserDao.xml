@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.UserDao">
+
+    <!-- 配置 查询结果的列名和实体类的属性名的对应关系 -->
+    <resultMap id="userMap" type="User">
+        <!-- 主键字段的对应 -->
+        <id property="uid" column="id"></id>
+        <!--非主键字段的对应-->
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <result property="birthday" column="birthday"></result>
+        <collection property="roles" ofType="Role">
+            <result property="rid" column="id"></result>
+            <result property="role_name" column="role_name"></result>
+            <result property="role_desc" column="role_desc"></result>
+
+        </collection>
+    </resultMap>
+
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultMap="userMap">
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from user1 as u
+        left join user_role as ur on u.id = ur.uid
+        left join role as r on r.id = ur.rid;
+
+
+    </select>
+
+
+
+</mapper>
